@@ -17,7 +17,7 @@ chmod +x build.sh
 **Single command installation in a CVM:**
 ```bash
 docker run --rm --privileged --pid=host --net=host -v /:/host \
-  sysbox-installer:latest
+  dstacktee/dstack-sysbox-installer:1.0.0
 ```
 
 That's it! The installer will:
@@ -33,7 +33,7 @@ That's it! The installer will:
 
 ```bash
 docker run -it --rm --privileged --pid=host --net=host -v /:/host \
-  sysbox-installer:latest bash
+  dstacktee/dstack-sysbox-installer:1.0.0 bash
 ```
 
 Then run: `/usr/local/bin/install-sysbox-complete.sh`
@@ -41,7 +41,7 @@ Then run: `/usr/local/bin/install-sysbox-complete.sh`
 ### Check Build Information
 
 ```bash
-docker run --rm sysbox-installer:latest cat /usr/local/share/BUILD_INFO
+docker run --rm dstacktee/dstack-sysbox-installer:1.0.0 cat /usr/local/share/BUILD_INFO
 ```
 
 ## Usage After Installation
@@ -177,9 +177,9 @@ sudo chmod +x /usr/local/bin/cosign
 # Verify the image (replace VERSION and DIGEST)
 cosign verify-attestation \
   --type https://slsa.dev/provenance/v1 \
-  --certificate-identity-regexp "^https://github.com/YOUR_ORG/dstack-sysbox-installer/.github/workflows/release.yml@refs/tags/vVERSION$" \
+  --certificate-identity-regexp "^https://github.com/Dstack-TEE/dstack-sysbox-installer/.github/workflows/release.yml@refs/tags/vVERSION$" \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-  docker.io/YOUR_ORG/dstack-sysbox-installer@sha256:DIGEST
+  docker.io/Dstack-TEE/dstack-sysbox-installer@sha256:DIGEST
 ```
 
 You can also verify on [Sigstore Search](https://search.sigstore.dev/).
