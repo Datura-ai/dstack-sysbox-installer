@@ -108,7 +108,7 @@ installer/
 
 - All downloads verified with SHA256 checksums
 - Sysbox built from official Git repository (recursive clone)
-- Uses specific version tags (v0.6.7)
+- Uses specific version tags (v0.7.0)
 - Proper systemd service isolation
 
 ## Troubleshooting

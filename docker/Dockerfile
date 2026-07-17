@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Go for Sysbox build
-RUN wget -O- https://golang.org/dl/go1.21.5.linux-amd64.tar.gz | tar -C /usr/local -xzf -
+RUN wget -O- https://golang.org/dl/go1.24.13.linux-amd64.tar.gz | tar -C /usr/local -xzf -
 ENV PATH="/usr/local/go/bin:${PATH}"
 
 # Install Go protobuf plugins

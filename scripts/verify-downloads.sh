@@ -8,9 +8,9 @@ RSYNC_URL="https://download.samba.org/pub/rsync/src/rsync-${RSYNC_VERSION}.tar.g
 RSYNC_SHA256="4e7d9d3f6ed10878c58c5fb724a67dacf4b6aac7340b13e488fb2dc41346f2bb"
 
 # Sysbox version and commit hash for security
-SYSBOX_VERSION="v0.6.7"
+SYSBOX_VERSION="v0.7.0"
 SYSBOX_URL="https://github.com/nestybox/sysbox.git"
-SYSBOX_COMMIT_HASH="3a69811f54f8f83264ebb36dcaf51708e80b9e84" # Actual commit hash for v0.6.7
+SYSBOX_COMMIT_HASH="27cb713f973b0a8de744519ce5d19d69f0280844" # Actual commit hash for v0.7.0
 
 log_info() {
     echo "ℹ️  $1"
