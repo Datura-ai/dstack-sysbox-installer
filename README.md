@@ -164,6 +164,29 @@ Releases are automated via GitHub Actions with sigstore attestation:
    - Generate sigstore attestation
    - Create a GitHub release
 
+The `build-and-release` job runs in the GitHub environment `dockerhub-push`, which holds the
+Docker Hub token (`DOCKERHUB_TOKEN`) and allows only `main` and `v*` tags to use it: a
+`workflow_dispatch` from any other branch stops before the job's first step and never sees the
+token. The tag ruleset `release-tags` (`.github/rulesets/release-tags.json`) restricts who may
+create, move or delete `v*` tags. Both are configured once by a repository admin; until then
+GitHub auto-creates the environment unprotected on the first run and the repository-level
+secret keeps resolving.
+
+```bash
+R=Datura-ai/dstack-sysbox-installer
+gh api -X PUT "repos/$R/environments/dockerhub-push" \
+  -F 'deployment_branch_policy[protected_branches]=false' \
+  -F 'deployment_branch_policy[custom_branch_policies]=true'
+gh api -X POST "repos/$R/environments/dockerhub-push/deployment-branch-policies" -f name=main -f type=branch
+gh api -X POST "repos/$R/environments/dockerhub-push/deployment-branch-policies" -f 'name=v*' -f type=tag
+gh secret set DOCKERHUB_TOKEN -R "$R" --env dockerhub-push      # paste the value when prompted
+gh secret delete DOCKERHUB_TOKEN -R "$R"                         # only after the environment secret exists
+gh api "repos/$R/rulesets" --method POST --input .github/rulesets/release-tags.json
+```
+
+The ruleset's bypass list is given as GitHub user ids (`gh api users/<login> --jq .id`):
+`114649324` = `surcyf123`, `4623096` = `arhangel66`.
+
 ### Verifying Image Attestation
 
 All released images are signed with sigstore for supply chain security:
