@@ -32,7 +32,7 @@ jobs:
 
       # Docker Hub OIDC connection (no stored token): the job's `id-token: write` above is what the
       # action exchanges; DOCKERHUB_OIDC_CONNECTIONID is a repository variable, `username` the organization.
-      # Connection and ruleset values: Datura-ai/lium-io .github/DOCKERHUB_OIDC.md.
+      # A repository admin configures the OIDC connection.
       - name: Log in to Docker Hub (OIDC, no stored token)
         uses: docker/login-action@v4   # >= 4.5.0 for Docker Hub OIDC
         env:
