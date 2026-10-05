@@ -30,11 +30,18 @@ jobs:
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+      # Docker Hub OIDC connection (no stored token): the job's `id-token: write` above is what the
+      # action exchanges; DOCKERHUB_OIDC_CONNECTIONID is a repository variable, `username` the organization.
+      # A repository admin configures the OIDC connection.
+      - name: Log in to Docker Hub (OIDC, no stored token)
+        uses: docker/login-action@v4   # >= 4.5.0 for Docker Hub OIDC
+        env:
+          DOCKERHUB_OIDC_CONNECTIONID: ${{ vars.DOCKERHUB_OIDC_CONNECTIONID }}
+          # The exchanged token is the docker password for the rest of the job (default 300 s, max 21600);
+          # 30 min leaves room for a cold cache or a slow runner, same value as lium-io.
+          DOCKERHUB_OIDC_EXPIREIN: "1800"
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: daturaai
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
