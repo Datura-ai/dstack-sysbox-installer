@@ -164,6 +164,11 @@ Releases are automated via GitHub Actions with sigstore attestation:
    - Generate sigstore attestation
    - Create a GitHub release
 
+The `build-and-release` job runs in the GitHub environment `dockerhub-push`, which only `main`
+and `v*` tags may use, and `v*` tags are protected by a tag ruleset
+(`.github/rulesets/release-tags.json`). A repository admin configures the environment and the
+Docker Hub credential it holds.
+
 ### Verifying Image Attestation
 
 All released images are signed with sigstore for supply chain security:
